@@ -1,12 +1,12 @@
 ---
 author: Alexander Korfellner
 lang: de
-title: AI und Mathematik
+title: KI und Mathematik
 highlightTheme: monokai
 theme: white
 ---
 
-# AI und Mathematik
+# KI und Mathematik
 
 <img src="img/hak.png" alt="Picture" width="350">
 
@@ -15,19 +15,13 @@ Alexander Kornfellner
 ----
 
 ### Inhalte
-- Wie funktionieren Neuronale Netze und Vector Embedding
-- Wie kann ich das im Mathematik Unterricht einsetzen
-- Prompt Engineering und eigene Unterrichtsmaterialien mit KI erstellen
+- Was ist Künstliche Intelligenz (KI)?
+- Neuronale Netze
+- Vector Embedding
+- Large Language Models (LLMs)
+- Prompting
 
 ----
-
-### Ziele
-
-- Grobes Verständnis von Neuronalen Netzen und Vector Embedding und der Mathematik im Hintergrund
-- KI als Beispiele für die Themen des Mathematikunterrichts nutzen
-- Eigene Unterrichtsmaterialien mit KI erstellen
-
----
 
 # Was ist KI?
 
@@ -448,6 +442,14 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 
 <p style="font-size:0.5em; margin-top:0.5em;">Quelle: <a href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener">https://platform.openai.com/tokenizer</a></p>
 
+----
+
+### Chatbots
+
+- LLMs sind keine Chatbots
+- Chatbots sind Anwendungen, die auf LLMs aufbauen
+- Chatbots haben oft zusätzliche Funktionen:
+
 ---
 
 # Prompting
@@ -485,3 +487,70 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
   - Ansatz 1 - Experte: "Du bist ein erfahrener Mathematiklehrer..."
   - Ansatz 2 - Charakter: "Du bist Albert Einstein..."
   - Ansatz 3 - Zielgruppe: "Gib mir Rückmeldung aus der Sicht eines 16 jährigen Schülers der Handelsakademie"
+
+----
+
+### Kontext bereitstellen
+
+- KI kann keine Gedanken lesen
+- so viele relevante Informationen wie möglich bereitstellen
+- Orientierung an W-Fragen möglich: Wer? Was? Wann? Wo? Warum? Wie?
+- Beispiel: "Erstelle eine 4-wöchige Unterrichtssequenz für den Mathe-Unterricht zum Thema Integralrechnung.” Zu viel Spielraum: Wie viele Stunden stehen tatsächlich zur Verfügung. 4 x 1 x 45 Minuten, oder 4 x 3 x 50 Minuten?
+
+----
+
+### Beispiele geben
+
+- Beispiele helfen dem Modell, den gewünschten Stil und das Format zu verstehen
+- Beispiel: "Erstelle ein Arbeitsblatt zum Thema XY für mich. Achte bei Komplexität und Umfang auf folgendes Beispiel, ändere aber die Angabe"
+
+----
+
+### Retrieval Augmented Generation (RAG)
+
+- Kombiniert LLMs mit externen Wissensquellen
+- Modell greift auf Dokumente, Datenbanken oder das Internet zu, um Antworten zu generieren
+- Vorteile:
+  - Aktuelles Wissen
+  - Reduzierte Halluzinationen
+- Beispiel: Ehemalige Zentralmatura-PDFs als Wissensbasis hochladen um bei der Erstellung neuer Aufgaben im typischen Stil zu bleiben
+
+----
+
+### Rückfragen
+
+- Fordere das Modell auf, Rückfragen zu stellen, wenn Informationen fehlen
+- Beispiel: "Erstelle eine Stundenwiederholung zum Thema XY. Frage bitte zuerst nach allen Informationen die du brauchst, damit du mir bestmöglich helfen kannst."
+
+----
+
+### Vorlagen erstellen
+
+- Erstelle Vorlagen für wiederkehrende Aufgaben
+- Wenn ein Prompt gut funktioniert, speichere ihn für zukünftige Verwendung
+
+----
+
+### Nach dem Prompt
+
+- Überprüfe die Antwort kritisch
+- Fordere bei Bedarf Verbesserungen an
+- Iteratives Vorgehen: "Verbessere die Antwort, indem du ... berücksichtigst"
+
+----
+
+### System Prompts
+
+- Einige Plattformen erlauben spezielle System Prompts
+- Setzen den Rahmen für alle folgenden Interaktionen
+- Beispiel: "Du bist ein hilfsbereiter Assistent, der immer höflich und professionell antwortet."
+- In den User Einstellungen von ChatGPT können eigene System Prompts definiert werden
+- Custom GPTs
+
+----
+
+### Tipps
+
+- Experimentiere mit verschiedenen Formulierungen
+- Prompting ist Übungssache
+- [Markdown](https://www.markdownguide.org/) oder **LaTeX** verwenden
