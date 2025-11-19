@@ -1,0 +1,33 @@
+name: Build and Deploy Reveal.js Slides
+
+on:
+  push:
+    branches:
+      - main  # Set this to your default branch
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'  # Set the Node.js version as per your project's requirement
+
+    - name: Build Slides with reveal-md
+      run: npx reveal-md slides/slides.md --static site  # Replace 'slides.md' with your Markdown file
+
+    - name: Copy img folder # remove this if you have not images
+      run: cp -r slides/img site/
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: site  # The output directory of reveal-md
