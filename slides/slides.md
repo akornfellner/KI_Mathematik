@@ -92,10 +92,11 @@ Alexander Kornfellner
 
 - Gewichtete Summe
 - Aktivierungsfunktion
+- Biases
 - nicht **linear**
 
 $$
-\text{Output} = \sigma\left(\sum_{i=1}^{n} w_i \cdot x_i\right)
+\text{Output} = \sigma\left(\sum_{i=1}^{n} w_i \cdot x_i+b_i\right)
 $$
 
 ----
@@ -157,7 +158,7 @@ $$
 ### Elegantere Schreibweise mit Matrizen
 
 $$
-\mathbf{h} = \sigma\left(\mathbf{W_1} \cdot \mathbf{x}\right)
+\mathbf{h} = \sigma\left(\mathbf{W_1} \cdot \mathbf{x}+\mathbf{b}\right)
 $$
 
 - Demo Matrizenrechnung
@@ -230,9 +231,9 @@ $$
 
 <img src="img/kette1.png" alt="Picture" width="300">
 
-$L = (t-o)^2 \text{ und } o = \sigma(w_1 \cdot h_1 + w_2 \cdot h_2)$
+$L = (t-o)^2 \text{ und } o = \sigma(w_1 \cdot h_1 + w_2 \cdot h_2+b)$
 
-$\Rightarrow L = (t - \sigma(w_1 \cdot h_1 + w_2 \cdot h_2))^2$
+$\Rightarrow L = (t - \sigma(w_1 \cdot h_1 + w_2 \cdot h_2+b))^2$
 
 $\mathbf{\frac{\partial L}{\partial w_1} = -2(t-o) \cdot o \cdot (1 - o) \cdot h_1}$
 
@@ -264,6 +265,10 @@ $w=0{,}5039$
 - Analysis (Ableitungen, Kettenregel, Aktivierungsfunktionen)
 - Optimierung (Gradient Descent)
 - Normalverteilung (Gewichtinitialisierung, Skalierung)
+
+----
+
+## Demo Time with MNIST!
 
 ---
 
