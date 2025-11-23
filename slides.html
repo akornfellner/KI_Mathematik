@@ -105,11 +105,11 @@ Alexander Kornfellner
 
 - Gewichtete Summe
 - Aktivierungsfunktion
-- Biases
+- Bias (Schwellenwert)
 - nicht **linear**
 
 $$
-\text{Output} = \sigma\left(\sum_{i=1}^{n} w_i \cdot x_i+b_i\right)
+\text{Output} = \sigma\left(\sum_{i=1}^{n} w_i \cdot x_i+b\right)
 $$
 
 ----
@@ -218,7 +218,7 @@ $$
 - Fehlerfunktion, z.B. mittlere quadratische Abweichung (MSE): $L=(\text{Soll} - \text{Ist})^2$
 - Wie trägt ein Gewicht $w$ zum Fehler bei?
 - partiellen Ableitung der Fehlerfunktion nach $w$ berechnen: $\frac{\partial }{\partial w}$
-- Gewicht anpassen: $w = w - \alpha \cdot \frac{\partial L}{\partial w}$
+- Gewicht anpassen: $w_{\text{neu}} = w_{\text{alt}} - \alpha \cdot \frac{\partial L}{\partial w}$
 - $\alpha$ = Lernrate
 
 ----
@@ -268,7 +268,7 @@ $w=0{,}5039$
 - Convolutional Neural Networks (CNNs) — Bildverarbeitung
 - Recurrent Neural Networks (RNNs) — Sequenzdaten
 - Long Short-Term Memory (LSTM) — Langzeitabhängigkeiten
-- Transformer — NLP, LLMs (z.B. GPT-5, BERT)
+- Transformer — NLP, LLMs (z.B. GPT-4, Gemini)
 
 ----
 
@@ -462,7 +462,7 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 
 ----
 
-### Play around wih different LLMs
+### Play around with different LLMs
 
 - LMArena: https://lmarena.ai/
 - Duck.AI: https://duckduckgo.com
@@ -474,6 +474,10 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 - LLMs sind keine Chatbots
 - Chatbots sind Anwendungen, die auf LLMs aufbauen
 - Chatbots haben oft zusätzliche Funktionen:
+  - Internetsuche
+  - Wissensdatenbanken
+  - Userinterface
+  - ...
 
 ---
 
@@ -579,6 +583,9 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 - Experimentiere mit verschiedenen Formulierungen
 - Prompting ist Übungssache
 - [Markdown](https://www.markdownguide.org/) oder **LaTeX** verwenden
+- **Mathematik spezifisch**:
+  - Analysetool verwenden
+  - Matplotlib für Grafiken verwenden
           </textarea>
         </section>
       </div>
