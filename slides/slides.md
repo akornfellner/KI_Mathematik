@@ -562,6 +562,7 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 - Beispiel: "Du bist ein hilfsbereiter Assistent, der immer höflich und professionell antwortet."
 - In den User Einstellungen von ChatGPT können eigene System Prompts definiert werden
 - Custom GPTs
+- *Demo*: Custom GPTs
 
 ----
 
@@ -571,5 +572,5 @@ Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen,
 - Prompting ist Übungssache
 - [Markdown](https://www.markdownguide.org/) oder **LaTeX** verwenden
 - **Mathematik spezifisch**:
-  - Analysetool verwenden
+  - Analysetool zum Rechnen verwenden (lassen)
   - Matplotlib für Grafiken verwenden
