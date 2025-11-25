@@ -312,6 +312,26 @@ $w=0{,}5039$
 - Vater zu Mutter wie Bruder zu _______?
 - Paris zu Frankreich wie Berlin zu _______?
 
+----
+
+### Anwendung: Empfehlungssysteme
+
+- **Netflix, Spotify, Amazon** nutzen diese Technik (Recommender Systems)
+- Nicht nur Wörter, auch Nutzer und Inhalte (Filme, Songs) sind Vektoren
+- **Content-Based:** Vektor des Nutzers ist nahe am Vektor des Films $\rightarrow$ Empfehlung
+- **Collaborative:** Vektor von Nutzer A ist nahe am Vektor von Nutzer B $\rightarrow$ A bekommt Empfehlungen, die B mochte
+
+----
+
+### Anwendung: Semantische Suche
+
+- **Klassische Suche:** Schlüsselwörter (Keywords)
+  - Suche: "PKW kaufen" $\rightarrow$ findet Text "Auto zu verkaufen" eventuell nicht
+  - Problem: Computer sucht nur exakt nach der Zeichenkette "P-K-W"
+- **Vektorsuche:** Bedeutung (Semantik)
+  - Suche: "Geld abheben" $\rightarrow$ findet "Bankomat", auch wenn das Wort nicht vorkommt
+  - Grund: Die Vektoren von "Geld abheben" und "Bankomat" liegen im Vektorraum sehr nah beieinander
+
 ---
 
 # Large Language Models (LLMs)
