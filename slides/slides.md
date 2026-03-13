@@ -4,4 +4,4 @@
 
 Alexander Kornfellner
 
-<p style="font-size:0.5em; margin-top:0.5em;">Slides: <a href="akornfellner.github.io/KI_Mathematik" target="_blank" rel="noopener">akornfellner.github.io/KI_Mathematik</a></p>
+<p style="font-size:0.5em; margin-top:0.5em;">Slides: <a href="https://akornfellner.github.io/KI_Mathematik/" target="_blank" rel="noopener">akornfellner.github.io/KI_Mathematik</a></p>
