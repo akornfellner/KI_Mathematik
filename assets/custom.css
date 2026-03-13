@@ -1,0 +1,112 @@
+:root {
+  --brand-offset-x: 2rem;
+  --brand-offset-y: 1.5rem;
+  --logo-height: 80px;
+  --footer-font-size: 1.4rem;
+  --footer-color-dark: rgba(255, 255, 255, 0.78);
+  --footer-color-light: rgba(0, 0, 0, 0.68);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.deck-shell {
+  position: relative;
+  height: 100%;
+}
+
+.brand-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.brand-logo {
+  position: absolute;
+  left: var(--brand-offset-x);
+  bottom: var(--brand-offset-y);
+  max-width: min(20vw, 180px);
+  max-height: var(--logo-height);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-center {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--brand-offset-y) + 0.15rem);
+  transform: translateX(-50%);
+  font-family: "Aptos", "Segoe UI", sans-serif;
+  font-size: var(--footer-font-size);
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+body.theme-dark .footer-center {
+  color: var(--footer-color-dark);
+}
+
+body.theme-white .footer-center {
+  color: var(--footer-color-light);
+}
+
+/* --- HAK theme (red headings, black text, white base) --- */
+body.theme-hak .footer-center {
+  color: var(--footer-color-light);
+}
+
+body.theme-hak .reveal h1,
+body.theme-hak .reveal h2,
+body.theme-hak .reveal h3,
+body.theme-hak .reveal h4,
+body.theme-hak .reveal h5,
+body.theme-hak .reveal h6 {
+  color: #c1272d;
+}
+
+/* --- HTL theme (blue headings, black text, white base) --- */
+body.theme-htl .footer-center {
+  color: var(--footer-color-light);
+}
+
+body.theme-htl .reveal h1,
+body.theme-htl .reveal h2,
+body.theme-htl .reveal h3,
+body.theme-htl .reveal h4,
+body.theme-htl .reveal h5,
+body.theme-htl .reveal h6 {
+  color: #1a5276;
+}
+
+.reveal .slides {
+  text-align: center;
+}
+
+.reveal .slides section.has-dark-background,
+.reveal.has-dark-background {
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --brand-offset-x: 1rem;
+    --brand-offset-y: 0.8rem;
+    --logo-height: 42px;
+    --footer-font-size: 0.72rem;
+  }
+
+  .footer-center {
+    max-width: 55vw;
+    white-space: normal;
+    line-height: 1.2;
+  }
+}

@@ -1,0 +1,4 @@
+site/
+__pycache__/
+*.pyc
+slides/topics/_index.json
