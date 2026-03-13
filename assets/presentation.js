@@ -126,7 +126,7 @@ const main = async () => {
     progress: true,
     center: true,
     transition: "slide",
-    plugins: [window.RevealMarkdown, window.RevealHighlight, window.RevealNotes],
+    plugins: [window.RevealMarkdown, window.RevealHighlight, window.RevealNotes, window.RevealMath.KaTeX],
   });
 
   await deck.initialize();
