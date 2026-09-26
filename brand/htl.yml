@@ -1,0 +1,40 @@
+# Design HTL Leonding
+meta:
+  name: HTL Leonding
+  link: https://www.htl-leonding.at
+
+logo:
+  images:
+    schule: htl.png
+  small: schule
+  medium: schule
+  large: schule
+
+color:
+  palette:
+    htl-blau: "#1a5276"
+    htl-hellblau: "#5dade2"
+    htl-orange: "#f39c12"
+    htl-rot: "#c0392b"
+  primary: htl-blau
+  secondary: htl-hellblau
+  foreground: "#1d1d1f"
+  background: "#ffffff"
+
+typography:
+  fonts:
+    - family: Source Sans 3
+      source: google
+      weight: [400, 600, 700]
+      style: [normal, italic]
+    - family: JetBrains Mono
+      source: google
+      weight: [400]
+  base: Source Sans 3
+  headings:
+    family: Source Sans 3
+    weight: 700
+    color: htl-blau
+  monospace: JetBrains Mono
+  link:
+    color: htl-blau

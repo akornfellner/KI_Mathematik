@@ -1,4 +1,4 @@
-name: Build and Deploy Reveal.js Slides
+name: Build and Deploy Quarto Slides
 
 on:
   push:
@@ -26,37 +26,37 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Generate topic index
-        run: |
-          mkdir -p slides/topics
-          ls -1 slides/topics/*.md 2>/dev/null | xargs -I{} basename {} | sort | python3 -c "
-          import sys, json
-          files = [line.strip() for line in sys.stdin if line.strip()]
-          print(json.dumps(files))
-          " > slides/topics/_index.json
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.18
 
-      - name: Assemble static site
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install Python dependencies
+        run: uv sync --locked
+
+      # Nur die Folien werden veröffentlicht – das Handout (PDF) bleibt lokal.
+      # Das Design (HTL/HAK) kommt aus der brand-Zeile in _quarto.yml.
+      - name: Render slides
         run: |
-          mkdir -p site
-          cp index.html presentation.yml site/
-          cp -r assets slides site/
-          for logo in hak.png htl.png; do
-            if [ -f "$logo" ]; then
-              cp "$logo" site/
-            fi
-          done
+          python3 scripts/kapitel.py
+          uv run quarto render --to revealjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./site
+          path: ./_site
 
   deploy:
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
 
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

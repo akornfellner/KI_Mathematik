@@ -1,0 +1,70 @@
+/*-- scss:defaults --*/
+$presentation-font-size-root: 36px;
+$presentation-h2-font-size: 1.5em;
+
+/*-- scss:rules --*/
+// Schriftnamen mit Ziffer ("Source Sans 3") müssen in CSS in Anführungszeichen
+// stehen – Quarto lässt sie beim Brand-Font weg, daher hier explizit gesetzt.
+:root {
+  --r-main-font: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --r-heading-font: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+}
+
+// Quellenangaben klein und gedämpft (funktioniert auf hellem und dunklem Hintergrund)
+.reveal .quelle {
+  font-size: 0.45em;
+  opacity: 0.7;
+  margin-top: 0.4em;
+}
+
+.reveal .slide-logo {
+  max-height: 44px !important;
+  bottom: 6px !important;
+  right: 12px !important;
+}
+
+// Titelfolie (wird von filter/praesentation.lua erzeugt)
+.reveal .titelfolie {
+  text-align: center;
+
+  h2 {
+    font-size: 2.2em;
+    margin-bottom: 0.4em;
+  }
+
+  // nostretch (im Filter) verhindert, dass Reveal.js das Logo verzerrt
+  img.titel-logo {
+    max-height: 32vh;
+    max-width: 70%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin: 0.3em auto;
+  }
+
+  .untertitel {
+    font-size: 1.1em;
+    opacity: 0.8;
+  }
+
+  .autor {
+    font-size: 1.1em;
+  }
+}
+
+.reveal .zentriert {
+  text-align: center;
+}
+
+.reveal .callout {
+  font-size: 0.85em;
+}
+
+.reveal pre code {
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.reveal table {
+  font-size: 0.8em;
+}

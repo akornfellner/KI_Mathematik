@@ -1,0 +1,28 @@
+# Design "white": neutral, weißer Hintergrund, dunkle Überschriften, kein Logo
+color:
+  palette:
+    blau: "#2a76dd"
+    dunkelgrau: "#222222"
+    grau: "#6b6b6b"
+  primary: blau
+  secondary: grau
+  foreground: dunkelgrau
+  background: "#ffffff"
+
+typography:
+  fonts:
+    - family: Source Sans 3
+      source: google
+      weight: [400, 600, 700]
+      style: [normal, italic]
+    - family: JetBrains Mono
+      source: google
+      weight: [400]
+  base: Source Sans 3
+  headings:
+    family: Source Sans 3
+    weight: 700
+    color: dunkelgrau
+  monospace: JetBrains Mono
+  link:
+    color: blau

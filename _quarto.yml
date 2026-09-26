@@ -1,0 +1,68 @@
+project:
+  output-dir: _site
+  render:
+    - index.qmd
+  # bindet alle kapitel/NN-*.qmd automatisch ein (erzeugt _kapitel.qmd)
+  pre-render: python3 scripts/kapitel.py
+
+# ------------------------------------------------------------------
+# PRÄSENTATION – daraus entstehen Titelfolie, Handout-Titelseite
+# und Kopfzeile.
+# ------------------------------------------------------------------
+vortrag:
+  titel: &titel "KI und Mathematik"
+  autor: &autor "Alexander Kornfellner"
+  url: "https://akornfellner.github.io/KI_Mathematik/"
+
+# ------------------------------------------------------------------
+# DESIGN AUSWÄHLEN – nur diese Zeile ändern (oder: just design hak):
+#   brand/htl.yml    → HTL Leonding (blau, Logo)
+#   brand/hak.yml    → HAK/HAS Eferding (rot, Logo)
+#   brand/white.yml  → neutral hell, ohne Logo
+#   brand/dark.yml   → dunkel, ohne Logo (Handout bleibt weiß)
+# Logo, Farben, Schrift und die matplotlib-Grafiken passen sich an.
+# ------------------------------------------------------------------
+brand: brand/htl.yml
+
+# Browser-Tab-Titel übernimmt den Titel von oben
+pagetitle: *titel
+
+# Sprache: de oder en (Callout-Titel, Inhaltsverzeichnis, Silbentrennung …)
+lang: de
+
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  # frischer Python-Kernel pro Durchlauf: Grafiken erkennen so zuverlässig,
+  # ob sie für Folien oder Handout erzeugt werden, und Änderungen wirken sofort
+  daemon: false
+
+filters:
+  - filter/praesentation.lua
+  - filter/handout.lua
+
+format:
+  revealjs:
+    output-file: index.html
+    author: *autor
+    footer: *autor
+    theme: [default, brand, theme/slides.scss]
+    slide-number: c/t
+    center: true
+    transition: slide
+    hash-type: number
+    preview-links: auto
+    code-line-numbers: false
+    fig-format: svg
+    html-math-method: katex
+
+  typst:
+    output-file: KI_Mathematik_Handout.pdf
+    papersize: a4
+    margin:
+      x: 2.3cm
+      y: 2.5cm
+    fontsize: 11pt
+    fig-format: svg
+    include-before-body: theme/handout.typ

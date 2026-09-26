@@ -1,0 +1,249 @@
+# Arbeiten mit KI-Agenten
+
+## Vom Chatbot zum Agenten
+
+Drei Stufen der KI-Nutzung:
+
+1. **Chatten** – Frage stellen, Antwort kopieren
+2. **Konfigurieren** – eigene Assistenten, Projekte, Custom GPTs
+3. **Delegieren** – ein Agent erledigt eine ganze Aufgabe selbstständig
+
+::: {.callout-note}
+## Definition
+Ein **KI-Agent** ist ein Sprachmodell mit **Werkzeugen** (Dateien lesen/schreiben, Programme ausführen, im Web suchen), das in einer **Schleife** arbeitet, bis ein vorgegebenes Ziel erreicht ist.
+:::
+
+::: notes
+Beim klassischen Chatten ist der Mensch das Bindeglied: Man kopiert Text aus dem Chatfenster in Word, bemerkt einen Fehler, kopiert ihn zurück und so weiter. Ein Agent arbeitet direkt in einem Ordner auf dem Computer. Er legt Dateien an, führt Programme aus, sieht sich das Ergebnis an und verbessert es – bis die Aufgabe erledigt ist. Das klassische „Prompt Engineering“ tritt dadurch in den Hintergrund; wichtiger wird, dem Agenten den richtigen Kontext und eine überprüfbare Aufgabe zu geben.
+:::
+
+## Die Arbeitsschleife eines Agenten {.slide-only}
+
+```{python}
+#| fig-align: center
+#| out-width: 62%
+grafiken.agent_schleife();
+```
+
+::: notes
+Ein Agent durchläuft immer wieder denselben Zyklus: Er versteht den Auftrag, sammelt Kontext (liest Dateien, sucht im Web), plant, handelt und prüft das Ergebnis. Fällt die Prüfung negativ aus – etwa weil ein LaTeX-Dokument nicht kompiliert oder eine Lösung nicht stimmt – beginnt die Schleife von vorne. Der Mensch gibt das Ziel vor und kontrolliert am Ende das Ergebnis.
+:::
+
+## Werkzeuge (Stand Herbst 2026)
+
+| Werkzeug | Anbieter | Wo? | Für wen? |
+|----------|----------|-----|----------|
+| **Claude Code** | Anthropic | Terminal, VS Code, Desktop-App, Web | Code, LaTeX, Quarto |
+| **Claude Cowork** | Anthropic | Claude Desktop-App | Dokumente, Ordner, Büroarbeit |
+| **Codex** | OpenAI | Terminal (CLI), IDE, ChatGPT-App, Web | Code, LaTeX, Quarto |
+| **ChatGPT Agent** | OpenAI | ChatGPT (Browser) | Web-Recherche, einfache Abläufe |
+| Weitere | Google, GitHub, … | Gemini CLI, Copilot, Cursor | Code |
+
+: {tbl-colwidths="[22,16,34,28]"}
+
+::: notes
+Die Werkzeuge entwickeln sich sehr schnell – was hier steht, ist eine Momentaufnahme. Für Lehrkräfte besonders interessant sind Claude Code und Codex, weil beide direkt in einem Ordner mit Unterrichtsmaterialien arbeiten und Textformate wie LaTeX, Markdown, Quarto oder Python beherrschen. Wer lieber ohne Terminal arbeitet, findet mit Claude Cowork bzw. der Codex-App in ChatGPT grafische Oberflächen mit ähnlichen Fähigkeiten. Alle genannten Werkzeuge setzen in der Regel ein kostenpflichtiges Abo voraus.
+:::
+
+## Warum für Mathe-Lehrkräfte?
+
+- Mathe-Materialien sind oft **Text**: LaTeX, Markdown, Quarto, GeoGebra-Dateien, Python
+- Agenten schreiben diese Dateien **direkt in den eigenen Ordner**
+- … und können sie **kompilieren, ansehen und korrigieren**
+- Grafiken per Code (z. B. matplotlib) statt per Hand
+- Lösungen lassen sich **per Code nachrechnen**
+
+::: {.callout-tip}
+## Beispiel aus der Praxis
+Genau diese Präsentation wurde mit einem Agenten von reveal.js auf Quarto umgebaut – Folien **und** Handout aus einer einzigen Quelle.
+:::
+
+::: notes
+Der große Vorteil textbasierter Formate: Der Agent kann sie vollständig lesen und schreiben, und man kann jede Änderung nachvollziehen. Aus einer Quarto-Datei lassen sich Folien, ein PDF-Handout und eine Webseite erzeugen. Grafiken entstehen aus Python-Code und sind damit jederzeit exakt reproduzierbar – ändert man eine Zahl in der Angabe, ändert sich die Grafik mit.
+:::
+
+## Vom Prompt zum Auftrag
+
+Ein guter Auftrag an einen Agenten enthält vier Teile:
+
+1. **Ziel** – Was soll am Ende entstehen?
+2. **Kontext** – Welche Dateien, Vorlagen, Klassen, Vorkenntnisse?
+3. **Rahmenbedingungen** – Umfang, Notation, Format, Stil
+4. **Fertig, wenn …** – Woran erkennt man, dass die Aufgabe erledigt ist?
+
+::: notes
+Diese Struktur empfiehlt OpenAI in den Best Practices für Codex, und sie gilt genauso für Claude Code. Viele klassische Prompting-Tipps stecken darin: präzise Sprache, Kontext bereitstellen, Beispiele geben. Neu ist vor allem der vierte Punkt. Ein Agent hört auf, wenn die Arbeit „fertig aussieht“ – gibt man ihm ein überprüfbares Kriterium, kann er selbst kontrollieren und nachbessern.
+:::
+
+## Beispielauftrag
+
+```{.markdown}
+Erstelle in arbeitsblaetter/ ein Arbeitsblatt zu Exponentialfunktionen
+für die 2. Klasse HAK (Wachstum und Zerfall, Anwendungsaufgaben).
+
+Kontext: Orientiere dich an Layout und Umfang von @vorlagen/arbeitsblatt.tex.
+Die Klasse kennt lineare Funktionen, aber noch keine Logarithmen.
+
+Rahmen: 6 Aufgaben, steigender Schwierigkeitsgrad, Dezimalkomma,
+Grafiken mit matplotlib, separates Lösungsblatt mit Rechenweg.
+
+Fertig, wenn: beide PDFs fehlerfrei kompilieren, jede Lösung mit
+Python nachgerechnet wurde und das Arbeitsblatt maximal 2 Seiten hat.
+```
+
+::: notes
+Mit `@` verweist man in Claude Code und Codex direkt auf eine Datei – der Agent liest sie dann selbst. Statt die Vorlage zu beschreiben, zeigt man sie einfach her. Der letzte Absatz macht den Unterschied: Der Agent kompiliert, rechnet nach und zählt die Seiten, bevor er meldet, dass er fertig ist.
+:::
+
+## Erst planen, dann umsetzen
+
+- **Plan-Modus**: Agent liest und plant, ändert aber noch nichts
+  - Claude Code: `Shift+Tab` → *plan mode*
+  - Codex: `/plan`
+- Plan lesen, korrigieren, dann freigeben
+- **Rückfragen lassen**: *„Stelle mir zuerst alle Fragen, die du brauchst.“*
+
+::: {.callout-tip}
+## Tipp
+Bei größeren Vorhaben (z. B. eine ganze Unterrichtssequenz) den Agenten zuerst **interviewen lassen** und das Ergebnis als Plan-Datei speichern. Danach in einer frischen Sitzung umsetzen.
+:::
+
+::: notes
+Planen lohnt sich immer dann, wenn man sich über den Weg noch nicht sicher ist oder viele Dateien betroffen sind. Für kleine Änderungen – einen Tippfehler, eine zusätzliche Aufgabe – ist der Plan-Modus überflüssig. Die Aufforderung zu Rückfragen war schon beim klassischen Prompting ein guter Tipp und ist bei Agenten noch wichtiger, weil sie sonst mit falschen Annahmen sehr viel Arbeit erledigen.
+:::
+
+## Projektgedächtnis: CLAUDE.md / AGENTS.md
+
+- Datei im Projektordner, die der Agent **bei jedem Start** liest
+- Claude Code: `CLAUDE.md` – Codex (und viele andere): `AGENTS.md`
+- Starthilfe: Befehl `/init` erzeugt eine erste Version
+
+```{.markdown}
+# Mathematik-Materialien 3AK
+- Schulbuch: "Mathematik HAK 3", Kapitel liegen in buch/
+- Notation: Dezimalkomma, österreichische Schreibweise (z. B. Jänner)
+- Arbeitsblätter mit Vorlage vorlagen/arbeitsblatt.tex, kompilieren mit latexmk
+- Grafiken immer mit matplotlib, nie als Bild aus dem Internet
+- Lösungen immer mit Python (sympy) nachrechnen
+```
+
+::: notes
+Alles, was man einem Agenten sonst in jeder Sitzung neu erklären müsste, gehört in diese Datei. Wichtig ist, sie kurz zu halten: Die offiziellen Empfehlungen raten zu deutlich unter 200 Zeilen. Für jede Zeile sollte man sich fragen: „Würde der Agent ohne diese Zeile Fehler machen?“ Wenn nicht, kann sie weg. Macht der Agent wiederholt denselben Fehler, ergänzt man die Datei um eine entsprechende Regel.
+:::
+
+## Skills – wiederkehrende Abläufe
+
+- Anleitung als Datei `SKILL.md` in einem eigenen Ordner
+- wird nur geladen, **wenn sie gebraucht wird**
+- offener Standard: funktioniert in Claude Code, Codex und weiteren Agenten
+- Aufruf direkt, z. B. `/schularbeit`, oder automatisch
+
+::: {.callout-tip}
+## Ideen für Skills
+- Schularbeit mit A/B-Gruppe, Punkteschema und Notenschlüssel
+- Aufgaben im Stil der standardisierten Reife- und Diplomprüfung (SRDP)
+- Moodle-Quiz im Import-Format erstellen
+:::
+
+::: notes
+Während CLAUDE.md bzw. AGENTS.md immer geladen wird, sind Skills „Wissen auf Abruf“: Der Agent sieht zunächst nur Name und Kurzbeschreibung und lädt die vollständige Anleitung erst bei Bedarf. So kann man viele Abläufe hinterlegen, ohne den Agenten zu überfrachten. Ein Skill kann neben der Anleitung auch Vorlagen, Beispiele und Skripte enthalten. Tipp: Den Agenten selbst bitten, aus einer gelungenen Sitzung einen Skill zu erstellen.
+:::
+
+## Kontext ist die wichtigste Ressource
+
+- Alles – Nachrichten, gelesene Dateien, Ausgaben – landet im **Kontextfenster**
+- Je voller der Kontext, desto schlechter die Ergebnisse
+- **Eine Aufgabe pro Sitzung**; zwischen Aufgaben neu starten
+  - Claude Code: `/clear`, `/compact` – Codex: `/new`, `/compact`
+- Nach zwei gescheiterten Korrekturen: **neu starten** mit besserem Auftrag
+
+::: {.callout-important}
+Nur so viele Zusatzwerkzeuge (MCP-Server, Plugins) aktivieren wie nötig – jedes davon belegt Platz im Kontext.
+:::
+
+::: notes
+Aus „Prompt Engineering“ ist „Context Engineering“ geworden: Entscheidend ist, welche Informationen das Modell im Moment der Arbeit vor sich hat. Lange Sitzungen, in denen man von Thema zu Thema springt, füllen das Kontextfenster mit Irrelevantem, und der Agent „vergisst“ frühere Anweisungen. Eine frische Sitzung mit einem präziseren Auftrag ist fast immer besser als die fünfte Korrektur in einer langen Sitzung. Referenzmaterial wie Lehrpläne oder alte Prüfungen am besten einmal in Textdateien umwandeln und im Projektordner ablegen.
+:::
+
+## Den Agenten selbst prüfen lassen
+
+- Dem Agenten eine **Prüfmöglichkeit** geben:
+  - LaTeX / Quarto kompilieren
+  - Lösungen mit Python oder sympy nachrechnen
+  - PDF rendern und als Bild ansehen lassen
+- **Zweite Meinung**: frische Sitzung oder Sub-Agent als Korrektor
+  - Codex: `/review`
+
+::: {.callout-warning}
+## Die Verantwortung bleibt bei uns
+Auch ein Agent halluziniert. Jedes Material vor dem Einsatz in der Klasse selbst durchsehen – besonders Angaben, Lösungen und Punkteschema.
+:::
+
+::: notes
+Das ist der wichtigste Tipp überhaupt: Ohne Prüfmöglichkeit ist der Mensch die einzige Kontrolle, und jeder Fehler wartet darauf, dass man ihn selbst findet. Kann der Agent dagegen kompilieren, nachrechnen oder sich das Ergebnis ansehen, korrigiert er viele Fehler selbst. Für die Mathematik ist das ideal: „Rechne jede Lösung mit sympy nach“ ist eine einfache, sehr wirksame Anweisung. Eine Prüfung durch eine frische Sitzung ist außerdem unvoreingenommener, weil sie die eigene Arbeit nicht „verteidigen“ muss.
+:::
+
+## Sicherheit und Kontrolle
+
+- **Berechtigungen**: Agent fragt vor Änderungen – nicht blind alles erlauben
+- Eigenen **Arbeitsordner** verwenden, nie das ganze Home-Verzeichnis
+- **Git** als Sicherheitsnetz: jede Änderung nachvollziehbar und umkehrbar
+- **Datenschutz**: keine Schülerdaten, Noten oder Namen an den Agenten geben
+- Vorsicht bei Inhalten aus dem Internet (*Prompt Injection*)
+
+::: notes
+Agenten haben Zugriff auf den eigenen Computer – das macht sie mächtig, aber auch riskant. Claude Code und Codex arbeiten mit Berechtigungsstufen und Sandboxen; man sollte mit den Standardeinstellungen beginnen und erst lockern, wenn man dem Ablauf vertraut. Mit Git lässt sich jede Änderung ansehen und rückgängig machen. Personenbezogene Daten von Schülerinnen und Schülern haben in kommerziellen KI-Diensten nichts verloren. Webseiten und Dokumente können versteckte Anweisungen enthalten, die einen Agenten zu unerwünschten Aktionen verleiten (Prompt Injection).
+:::
+
+## Typische Einsatzbereiche
+
+- Arbeitsblatt **und** Lösung aus einer Quelle (LaTeX oder Quarto)
+- Schularbeiten in **Gruppe A/B** mit geänderten Zahlen
+- Aufgaben im Stil alter Reifeprüfungen (PDFs in den Projektordner legen)
+- Funktionsgraphen, Diagramme und Statistiken mit **matplotlib**
+- Folien und Handouts – wie diese Präsentation
+- Moodle-Fragen im Import-Format (z. B. GIFT oder XML)
+
+::: notes
+Früher hat man für solche Aufgaben RAG-Funktionen oder Custom GPTs verwendet. Ein Agent arbeitet einfach mit den Dateien im Projektordner: Legt man alte Prüfungen, Schulbuchkapitel oder eigene Vorlagen hinein, kann er sich daran orientieren. Gerade das Erstellen von Parallelgruppen mit „schönen“ Zahlen ist eine Stärke: Der Agent kann per Code prüfen, dass alle Ergebnisse ganzzahlig oder sinnvoll gerundet sind.
+:::
+
+## Grenzen und didaktische Fragen
+
+- Agenten kosten Geld (Abo) und verbrauchen viele Tokens
+- Ergebnisse sind nur so gut wie Auftrag, Kontext und Kontrolle
+- **Skill Skipping**: Was Lehrkräfte oder Lernende auslagern, wird nicht mehr selbst geübt
+- Rolle der Lehrkraft verschiebt sich: vom Erstellen zum **Auswählen, Prüfen und Anpassen**
+
+::: notes
+Agenten sparen viel Zeit bei der Materialerstellung – die Zeit sollte in das investiert werden, was eine KI nicht kann: die Beziehung zu den Schülerinnen und Schülern und die didaktische Entscheidung, was eine Klasse gerade braucht. Für den Unterricht selbst stellt sich die Frage, welche Kompetenzen Schülerinnen und Schüler weiterhin selbst beherrschen müssen, auch wenn ein Agent die Aufgabe erledigen könnte.
+:::
+
+## Checkliste {.slide-only}
+
+::: {.callout-tip}
+## Checkliste für die Arbeit mit Agenten
+1. Eigenen Projektordner anlegen, am besten mit Git
+2. `CLAUDE.md` / `AGENTS.md` mit den wichtigsten Regeln
+3. Auftrag mit **Ziel – Kontext – Rahmen – Fertig, wenn**
+4. Bei größeren Aufgaben: erst planen, Rückfragen zulassen
+5. Eine Aufgabe pro Sitzung, Kontext sauber halten
+6. Agent prüft selbst (kompilieren, nachrechnen) – und ich prüfe am Ende auch
+7. Gelungene Abläufe als Skill speichern
+:::
+
+## Demo {.slide-only}
+
+::: {.content-visible when-format="revealjs"}
+::: zentriert
+Arbeitsblatt mit einem Agenten erstellen
+:::
+:::
+
+## Quellen und Links {.smaller}
+
+- Anthropic: [Best Practices for Claude Code](https://code.claude.com/docs/en/best-practices)
+- OpenAI: [Codex Best Practices](https://learn.chatgpt.com/guides/best-practices)
+- Agent Skills: [agentskills.io](https://agentskills.io)
+- M. Flick: [KI-Agenten in Schule und Unterricht](https://www.manuelflick.de/blog/ki-agenten-schule)
+- M. Maguire: [AI Agents Take Over Lesson Prep](https://www.teachmaths.org/20260822-claude-code/)

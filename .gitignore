@@ -1,4 +1,10 @@
-site/
+# Quarto
+/_site/
+/.quarto/
+index.typ
+**/*.quarto_ipynb
+
+# Python
+.venv/
 __pycache__/
 *.pyc
-slides/topics/_index.json

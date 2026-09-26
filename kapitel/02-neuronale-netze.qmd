@@ -1,0 +1,248 @@
+# Neuronale Netze
+
+## Anwendungen
+
+- Bild- und Spracherkennung
+- Natürliche Sprachverarbeitung (NLP)
+- Empfehlungssysteme
+- LLMs (z. B. ChatGPT, Claude, Gemini)
+- …
+
+::: notes
+Neuronale Netze stecken heute in vielen Alltagsanwendungen: in der Gesichtserkennung am Smartphone, in der Spracheingabe, in den Vorschlägen von Streamingdiensten und natürlich in Chatbots. Mathematisch sind sie erstaunlich einfach aufgebaut – die Leistung kommt von der schieren Größe.
+:::
+
+## Inspiration
+
+- Biologische Neuronen im menschlichen Gehirn
+
+![](img/neuron.jpeg){fig-align="center" width="70%"}
+
+::: notes
+Ein biologisches Neuron empfängt über die Dendriten Signale von anderen Nervenzellen. Überschreitet die Summe der Signale einen Schwellenwert, „feuert“ das Neuron und gibt über das Axon selbst ein Signal weiter. Künstliche Neuronen übernehmen genau dieses Prinzip in stark vereinfachter Form.
+:::
+
+## Künstliches Neuron
+
+![](img/neuron2.png){fig-align="center" width="70%"}
+
+::: quelle
+Quelle: [TU Dresden](https://methpsy.elearning.psych.tu-dresden.de/mediawiki/index.php/Neuronale_Netze)
+:::
+
+## Mathematik im Neuron
+
+- Gewichtete Summe
+- Bias (Schwellenwert)
+- Aktivierungsfunktion
+- nicht **linear**
+
+$$
+\text{Output} = \sigma\left(\sum_{i=1}^{n} w_i \cdot x_i+b\right)
+$$
+
+::: notes
+Jeder Eingang $x_i$ wird mit einem Gewicht $w_i$ multipliziert, die Produkte werden aufsummiert und ein Bias $b$ addiert. Bis hierhin ist das eine lineare Funktion – ein Skalarprodukt plus Konstante. Erst die Aktivierungsfunktion $\sigma$ macht das Neuron nichtlinear.
+:::
+
+## Aktivierungsfunktion
+
+- Durch Aktivierungsfunktionen wird Linearität verhindert
+- bringt den Output in ein vorgegebenes Intervall
+- Es gibt verschiedene:
+  - Sigmoid
+  - ReLU
+  - Softmax
+  - …
+
+::: {.callout-important}
+Ohne Aktivierungsfunktion wäre ein noch so großes Netz nur eine einzige lineare Funktion – die Hintereinanderausführung linearer Funktionen ist wieder linear.
+:::
+
+## Beispiel: Sigmoid-Funktion
+
+$$
+\sigma(x) = \frac{1}{1 + e^{-x}}
+$$
+
+![](img/sigmoid.png){fig-align="center" width="40%"}
+
+::: notes
+Die Sigmoid-Funktion bildet jede reelle Zahl auf das Intervall $(0, 1)$ ab. Große positive Werte ergeben fast 1, große negative Werte fast 0. Sie ist überall differenzierbar – das ist wichtig für das Training. Eine schöne Übungsaufgabe: Man zeige, dass $\sigma'(x) = \sigma(x)\cdot(1-\sigma(x))$ gilt.
+:::
+
+## Aufbau eines Neuronalen Netzes
+
+- besteht aus mehreren Schichten (Layers)
+- Jede Schicht besteht aus mehreren Neuronen
+- Kanten verbinden die Neuronen der Schichten und haben Gewichte
+
+## Aufbau eines Neuronalen Netzes {.slide-only}
+
+![](img/nn.png){fig-align="center" width="70%"}
+
+::: quelle
+Quelle: <https://rocketloop.de/de/blog/kuenstliche-neuronale-netze/>
+:::
+
+::: notes
+Man unterscheidet Eingabeschicht, eine oder mehrere versteckte Schichten (Hidden Layers) und die Ausgabeschicht. In einem vollständig verbundenen Netz ist jedes Neuron mit jedem Neuron der nächsten Schicht verbunden.
+:::
+
+## Beispiel zum händischen Rechnen
+
+![](img/calc_nn.png){fig-align="center" width="70%"}
+
+*Hinweis: Gozintograph*
+
+::: notes
+Die Struktur erinnert an einen Gozintographen aus der Matrizenrechnung: Die Werte „fließen“ entlang der Kanten von links nach rechts und werden dabei mit den Gewichten multipliziert. Als Aktivierungsfunktion wird überall die Sigmoid-Funktion verwendet, der Bias ist in diesem Beispiel 0.
+:::
+
+## Lösung
+
+- $h_1 = \sigma\left(0{,}8\cdot 0{,}6 + (-0{,}2) \cdot 0{,}4\right)= \frac{1}{1+e^{-0{,}4}}=0{,}5987$
+- $h_2 = \sigma\left(0{,}4\cdot 0{,}6 + 0{,}9 \cdot 0{,}4\right)= \frac{1}{1+e^{-0{,}6}}=0{,}6457$
+- $y = \sigma\left(0{,}7 \cdot 0{,}5987 + (-0{,}5) \cdot 0{,}6457\right)=\mathbf{0{,}524}$
+
+## Elegantere Schreibweise mit Matrizen
+
+$$
+\mathbf{h} = \sigma\left(\mathbf{W_1} \cdot \mathbf{x}+\mathbf{b}\right)
+$$
+
+- Demo Matrizenrechnung
+
+::: notes
+Schreibt man die Gewichte einer Schicht in eine Matrix $\mathbf{W_1}$ und die Eingaben in einen Vektor $\mathbf{x}$, lässt sich eine ganze Schicht mit einer einzigen Matrix-Vektor-Multiplikation berechnen. Die Aktivierungsfunktion wird dann komponentenweise angewendet. Für das Beispiel oben gilt $\mathbf{W_1} = \begin{pmatrix} 0{,}8 & -0{,}2 \\ 0{,}4 & 0{,}9 \end{pmatrix}$ und $\mathbf{x} = \begin{pmatrix} 0{,}6 \\ 0{,}4 \end{pmatrix}$.
+:::
+
+## Vorteile Matrizenrechnung
+
+- kompakter
+- effizienter zu berechnen (v. a. bei großen Netzen)
+- einfacher zu implementieren
+- parallelisierbar (GPU)
+
+::: notes
+Grafikkarten sind darauf spezialisiert, sehr viele Multiplikationen gleichzeitig auszuführen. Genau deshalb sind GPUs zur wichtigsten Hardware für KI geworden.
+:::
+
+## Anmerkungen zu Neuronalen Netzen
+
+- Gewichte werden zufällig (meist normalverteilt) initialisiert
+- Trainingsprozess passt die Gewichte an
+- Neuronales Netz ist eine große, komplexe, nicht-lineare Funktion, die von vielen Variablen (Gewichten) abhängt
+- GPT-3 hat z. B. ca. 175 Milliarden Gewichte in 96 Schichten
+
+## Wie lernen Neuronale Netze?
+
+- Trainingsdaten: Eingabedaten + erwartete Ausgabe (Label)
+- Vorhersage der Ausgabe durch das Netz
+- Berechnung des Fehlers (Loss Function)
+- Anpassung der Gewichte durch Backpropagation und Optimierungsverfahren (z. B. Gradient Descent)
+
+::: notes
+Training bedeutet also: Das Netz rät, vergleicht mit der richtigen Antwort und verändert seine Gewichte ein kleines Stück in die Richtung, in der der Fehler kleiner wird. Das wird millionenfach wiederholt.
+:::
+
+## Backpropagation
+
+- Fehler wird rückwärts durch das Netz propagiert
+- anteilige Anpassung der Gewichte basierend auf ihrem Beitrag zum Fehler
+- kann wieder mit Matrizenrechnung effizient berechnet werden – mit den transponierten Gewichtsmatrizen
+
+## Backpropagation {.slide-only}
+
+- Fehlerfunktion, z. B. quadratische Abweichung: $L=(\text{Soll} - \text{Ist})^2$
+- Wie trägt ein Gewicht $w$ zum Fehler bei?
+- partielle Ableitung der Fehlerfunktion nach $w$ berechnen: $\frac{\partial L}{\partial w}$
+- Gewicht anpassen: $w_{\text{neu}} = w_{\text{alt}} - \alpha \cdot \frac{\partial L}{\partial w}$
+- $\alpha$ = Lernrate
+
+::: {.callout-note}
+## Mathematik aus dem Unterricht
+Die Ableitung zeigt, in welche Richtung der Fehler steigt. Also geht man einen kleinen Schritt in die **Gegenrichtung**.
+:::
+
+## Gradient Descent
+
+- Optimierungsalgorithmus zur Minimierung der Fehlerfunktion
+- Gewichte werden in Richtung des steilsten Abstiegs (negativer Gradient) angepasst
+- Iterativer Prozess: viele Durchläufe (Epochen) über die Trainingsdaten
+- Lernrate $\alpha$ bestimmt die Schrittgröße
+
+## Gradient Descent {.slide-only}
+
+![](img/gradient.png){fig-align="center" width="70%"}
+
+::: quelle
+Quelle: [medium.com/\@jaleeladejumo](https://medium.com/@jaleeladejumo/gradient-descent-from-scratch-batch-gradient-descent-stochastic-gradient-descent-and-mini-batch-def681187473)
+:::
+
+::: notes
+Man kann sich die Fehlerfunktion wie eine hügelige Landschaft vorstellen. Gradient Descent entspricht einem Wanderer im Nebel, der immer einen Schritt in die steilste Richtung bergab macht. Ist die Lernrate zu groß, springt man über das Tal hinweg; ist sie zu klein, dauert das Training ewig.
+:::
+
+## Händisches Beispiel
+
+```{python}
+#| fig-align: center
+#| out-width: 60%
+grafiken.netz_ausschnitt(zahlen=False);
+```
+
+$L = (t-o)^2 \quad\text{und}\quad o = \sigma(w_1 \cdot h_1 + w_2 \cdot h_2+b)$
+
+$\Rightarrow L = \left(t - \sigma(w_1 \cdot h_1 + w_2 \cdot h_2+b)\right)^2$
+
+$\mathbf{\frac{\partial L}{\partial w_1} = -2(t-o) \cdot o \cdot (1 - o) \cdot h_1}$
+
+::: notes
+Die Ableitung erhält man mit der Kettenregel: Die äußere Funktion $(t-o)^2$ liefert $-2(t-o)$, die Sigmoid-Funktion liefert $o\cdot(1-o)$ und die innere lineare Funktion liefert $h_1$. Das ist Stoff der Oberstufe – und genau das passiert milliardenfach beim Training eines LLMs.
+:::
+
+## Konkrete Zahlen
+
+```{python}
+#| fig-align: center
+#| out-width: 60%
+grafiken.netz_ausschnitt(zahlen=True);
+```
+
+Lernrate $\alpha = 0{,}1$:
+
+$w_1 = 0{,}5 + 0{,}1\cdot 2 \cdot (1-0{,}5939)\cdot 0{,}5939\cdot (1-0{,}5939)\cdot 0{,}4 \approx \mathbf{0{,}5078}$
+
+::: notes
+Da der Sollwert $t = 1$ größer als die Ausgabe $o \approx 0{,}5939$ ist, muss die Ausgabe steigen. Die Ableitung ist negativ, also wird das Gewicht $w_1$ etwas größer. Rechnet man mit dem neuen Gewicht erneut, liegt $o$ ein kleines Stück näher bei 1.
+:::
+
+## Moderne Netzarten
+
+- Convolutional Neural Networks (CNNs) — Bildverarbeitung
+- Recurrent Neural Networks (RNNs) — Sequenzdaten
+- Long Short-Term Memory (LSTM) — Langzeitabhängigkeiten
+- Transformer — NLP, LLMs (z. B. GPT, Claude, Gemini)
+
+## Mathematik in Neuronalen Netzen
+
+::: {.callout-tip}
+## Anknüpfungspunkte für den Unterricht
+- **Lineare Algebra**: Matrizenrechnung
+- **Analysis**: Ableitungen, Kettenregel, Aktivierungsfunktionen
+- **Optimierung**: Gradient Descent
+- **Stochastik**: Normalverteilung (Gewichtsinitialisierung, Skalierung)
+:::
+
+## Demo: MNIST {.slide-only}
+
+::: {.content-visible when-format="revealjs"}
+::: zentriert
+Ziffernerkennung mit einem kleinen neuronalen Netz
+:::
+:::
+
+::: notes
+In der Demo wird ein kleines Netz auf dem MNIST-Datensatz trainiert: 70 000 handgeschriebene Ziffern mit je $28 \times 28$ Pixeln. Schon ein Netz mit einer versteckten Schicht erreicht über 95 % Genauigkeit.
+:::

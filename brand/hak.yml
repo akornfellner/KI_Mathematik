@@ -1,0 +1,38 @@
+# Design HAK/HAS Eferding
+meta:
+  name: HAK/HAS Eferding
+
+logo:
+  images:
+    schule: hak.png
+  small: schule
+  medium: schule
+  large: schule
+
+color:
+  palette:
+    hak-rot: "#c1272d"
+    hak-schwarz: "#1b1a1f"
+    hak-grau: "#6b6b6b"
+  primary: hak-rot
+  secondary: hak-grau
+  foreground: hak-schwarz
+  background: "#ffffff"
+
+typography:
+  fonts:
+    - family: Source Sans 3
+      source: google
+      weight: [400, 600, 700]
+      style: [normal, italic]
+    - family: JetBrains Mono
+      source: google
+      weight: [400]
+  base: Source Sans 3
+  headings:
+    family: Source Sans 3
+    weight: 700
+    color: hak-rot
+  monospace: JetBrains Mono
+  link:
+    color: hak-rot

@@ -1,0 +1,85 @@
+# Vector Embedding
+
+## Was ist Vector Embedding?
+
+::: {.callout-note}
+## Definition
+Ein **Embedding** wandelt Objekte (Wörter, Sätze, Bilder) in Vektoren eines hochdimensionalen Raums um – so, dass ähnliche Bedeutungen nahe beieinander liegen.
+:::
+
+- Ziel: semantische Ähnlichkeiten und Beziehungen zwischen Objekten erfassen
+- Grundlage für viele KI-Anwendungen, z. B. NLP, Bildverarbeitung, Empfehlungssysteme
+- Beispiel: Netflix, Spotify …
+
+::: notes
+Computer können nur mit Zahlen rechnen. Damit ein Sprachmodell mit Wörtern arbeiten kann, wird jedes Wort (genauer: jeder Token) in einen Vektor mit mehreren hundert bis tausend Komponenten übersetzt. Diese Vektoren werden beim Training gelernt – niemand legt fest, was eine einzelne Dimension bedeutet.
+:::
+
+## Embedding {.slide-only}
+
+![](img/embedding.png){fig-align="center" width="90%"}
+
+::: quelle
+Quelle: [medium.com/a-intelligence](https://medium.com/a-intelligence/understanding-text-to-vector-representation-from-tokenization-to-embeddings-b59dfdabbbae)
+:::
+
+**Demo:** [TensorFlow Embedding Projector](https://projector.tensorflow.org/)
+
+::: notes
+Im Embedding Projector kann man echte Wortvektoren in 3D betrachten (die hohe Dimension wird dafür mit Verfahren wie PCA reduziert) und sich die nächsten Nachbarn eines Wortes anzeigen lassen.
+:::
+
+## Ähnlichkeiten
+
+- Vektoren können verglichen werden, um Ähnlichkeiten zu messen
+- Metriken:
+  - Euklidische Distanz (Abstand)
+  - Manhattan-Distanz (Abstand)
+  - Kosinus-Ähnlichkeit (Winkel zwischen Vektoren)
+  - Skalarprodukt, wenn Vektoren normiert sind
+
+$$
+\cos\varphi = \frac{\vec a \cdot \vec b}{|\vec a| \cdot |\vec b|}
+$$
+
+::: notes
+Die Kosinus-Ähnlichkeit ist direkt aus dem Mathematikunterricht bekannt: die Formel für den Winkel zwischen zwei Vektoren. Ein Wert nahe 1 bedeutet „zeigen in dieselbe Richtung“, also ähnliche Bedeutung.
+:::
+
+## Zusammenhänge und Distanzen
+
+- Mann zu Frau wie König zu _______?
+- Vater zu Mutter wie Bruder zu _______?
+- Paris zu Frankreich wie Berlin zu _______?
+
+## Rechnen mit Bedeutungen {.slide-only}
+
+```{python}
+#| fig-align: center
+#| out-width: 65%
+grafiken.wortvektoren();
+```
+
+::: notes
+Beziehungen zwischen Wörtern werden im Vektorraum zu Richtungen. Der Verbindungsvektor von „Mann“ zu „Frau“ ist ungefähr gleich dem von „König“ zu „Königin“. Deshalb liefert die Vektorrechnung $\vec{\text{König}} - \vec{\text{Mann}} + \vec{\text{Frau}}$ einen Vektor, der sehr nahe an $\vec{\text{Königin}}$ liegt. Die Grafik ist eine starke Vereinfachung auf zwei Dimensionen.
+:::
+
+## Anwendung: Empfehlungssysteme
+
+- **Netflix, Spotify, Amazon** nutzen diese Technik (Recommender Systems)
+- Nicht nur Wörter, auch Nutzer und Inhalte (Filme, Songs) sind Vektoren
+- **Content-Based:** Vektor des Nutzers ist nahe am Vektor des Films $\rightarrow$ Empfehlung
+- **Collaborative:** Vektor von Nutzer A ist nahe am Vektor von Nutzer B $\rightarrow$ A bekommt Empfehlungen, die B mochte
+
+## Anwendung: Semantische Suche
+
+- **Klassische Suche:** Schlüsselwörter (Keywords)
+  - Suche: „PKW kaufen“ $\rightarrow$ findet Text „Auto zu verkaufen“ eventuell nicht
+  - Problem: Computer sucht nur exakt nach der Zeichenkette „P-K-W“
+- **Vektorsuche:** Bedeutung (Semantik)
+  - Suche: „Geld abheben“ $\rightarrow$ findet „Bankomat“, auch wenn das Wort nicht vorkommt
+  - Grund: Die Vektoren von „Geld abheben“ und „Bankomat“ liegen im Vektorraum sehr nah beieinander
+
+::: notes
+Semantische Suche ist auch die Grundlage von RAG (Retrieval Augmented Generation): Ein Chatbot sucht zuerst per Vektorsuche die passenden Abschnitte aus hochgeladenen Dokumenten und gibt sie dem Sprachmodell als Kontext mit.
+:::

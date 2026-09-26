@@ -1,0 +1,178 @@
+# Large Language Models (LLMs)
+
+## Was sind LLMs?
+
+- Große neuronale Netze, die auf riesigen Textdatenmengen trainiert wurden
+- Ziel: Verständnis und Generierung natürlicher Sprache
+- Beispiele: ChatGPT, Gemini, Claude, Llama …
+
+[Video: 3Blue1Brown – Large Language Models](https://www.youtube.com/watch?v=LPZh9BOjkQs&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=5)
+
+## Wie funktionieren LLMs?
+
+- Basieren auf der Transformer-Architektur
+- Lernen komplexe Sprachmuster, Grammatik und Kontext
+
+::: {.callout-important}
+## Kernidee
+LLMs werden trainiert, das **nächste Wort** (genauer: den nächsten Token) in einem Text vorherzusagen.
+:::
+
+*Meine Lieblingsfarbe ist _____*
+
+::: notes
+So einfach die Aufgabe klingt: Um das nächste Wort gut vorhersagen zu können, muss das Modell Grammatik, Fakten und Zusammenhänge „lernen“. Eine Antwort von ChatGPT entsteht, indem das Modell Token für Token das jeweils nächste Stück Text erzeugt und an die Eingabe anhängt.
+:::
+
+## Frühere Textvervollständiger
+
+- Beispiel Smartphone: Ich – bin – in – einer – Gruppe – mit – den – anderen – Kindern – die – sich – um – mich – gekümmert – hat – …
+- Problem: Kontext wird nicht gut erfasst, lange Abhängigkeiten schwer zu lernen
+- LLMs können längere Kontexte besser verstehen und nutzen
+
+## Was ist ein Transformer?
+
+Ein **Transformer** ist eine spezielle Art von KI-Modell, die besonders gut darin ist, **Sprache zu verstehen und zu erzeugen**. Seit 2017 bildet diese Architektur die Grundlage fast aller modernen LLMs.
+
+::: notes
+Die Transformer-Architektur wurde 2017 im Artikel „Attention Is All You Need“ von Forschern bei Google vorgestellt. Das „T“ in ChatGPT steht für Transformer (Generative Pre-trained Transformer).
+:::
+
+## Die wichtigsten Ideen dahinter {.slide-only}
+
+## Attention – das Herzstück
+
+Stell dir vor, du liest einen Satz und möchtest verstehen, worauf sich ein bestimmtes Wort bezieht. Der Transformer macht das auch – mit einem Mechanismus namens **Attention**.
+
+- Attention bedeutet: *„Achte mehr auf die wichtigen Wörter, weniger auf die unwichtigen.“*
+- So kann das Modell Zusammenhänge erkennen, egal wie lang der Satz ist.
+
+## Beispiel {.slide-only}
+
+Im Satz *„Das ist mein Lieblingslied von Queen.“* muss das Modell verstehen, dass *„Queen“* sich auf die Band bezieht, nicht auf eine Königin.
+
+::: notes
+Mathematisch berechnet Attention für jedes Wortpaar über Skalarprodukte, wie stark die beiden Wörter zusammengehören. Hier „achtet“ das Wort „Queen“ stark auf „Lieblingslied“ – dadurch verschiebt sich sein Vektor in Richtung „Band“ statt „Königin“.
+:::
+
+## Parallel statt nacheinander
+
+- Frühere Modelle (RNNs, LSTMs) mussten Wörter **nacheinander** verarbeiten.
+- Transformer können viele Wörter **parallel** betrachten → viel schneller & effizienter.
+
+## Warum Transformer so erfolgreich sind
+
+- **Verstehen langen Kontextes** durch Attention
+- **Skalierbar** (funktioniert gut mit riesigen Datenmengen und großen Modellen)
+- **Parallelisierbar** → viel schneller trainierbar
+- **Flexibel**: für Texte, Bilder, Audio, Code usw.
+
+## Training von LLMs
+
+- tiefes neuronales Netz mit Milliarden von Parametern
+- trainiert auf riesigen Textkorpora (Bücher, Artikel, Webseiten)
+- trainiert auf Bildern mit Bildbeschreibungen (multimodale Modelle)
+- Menschen helfen durch Bewertungen (Reinforcement Learning from Human Feedback, RLHF)
+
+::: notes
+Nach dem Vortraining kann das Modell zwar Texte fortsetzen, ist aber noch kein hilfreicher Assistent. Erst durch Nachtraining mit Beispieldialogen und menschlichen Bewertungen (RLHF) lernt es, Fragen zu beantworten, Anweisungen zu befolgen und problematische Anfragen abzulehnen.
+:::
+
+## Halluzinationen
+
+- LLMs können falsche oder erfundene Informationen generieren
+- Ursachen:
+  - Unvollständige oder fehlerhafte Trainingsdaten
+  - Veraltetes Wissen (Cutoff-Datum)
+  - basiert auf Wahrscheinlichkeiten, nicht auf Fakten
+
+::: {.callout-warning}
+## Immer prüfen
+Faktenprüfung bleibt Pflicht. Hilfreich sind Internetzugang, Deep Research und RAG – und Agenten, die ihre Ergebnisse selbst nachrechnen (siehe letztes Kapitel).
+:::
+
+## Unterschiedliche Antworten
+
+- Warum geben LLMs unterschiedliche Antworten auf dieselbe Frage?
+- Beispiel: „Vervollständige den Satz: Das Notensystem geht von 1 bis …“
+
+## Notensystem 1 {.slide-only}
+
+![](img/noten2.png){fig-align="center" width="85%"}
+
+::: quelle
+Quelle: <https://bildungsinformatik.at/2024/collective-gpt/>
+:::
+
+## Notensystem 2 {.slide-only}
+
+![](img/noten1.png){fig-align="center" width="85%"}
+
+::: quelle
+Quelle: <https://bildungsinformatik.at/2024/collective-gpt/>
+:::
+
+::: notes
+Das Modell berechnet für jedes mögliche nächste Wort eine Wahrscheinlichkeit. Welche Zahl gewählt wird, hängt von dieser Verteilung und vom Zufall ab – deshalb liefern mehrere Anfragen unterschiedliche Antworten.
+:::
+
+## Temperatur
+
+- immer das wahrscheinlichste Wort auswählen
+  - deterministisch, immer gleiche Antwort
+  - kann zu langweiligen Antworten führen
+- Temperatur regelt die Zufälligkeit:
+  - **0**: keine = blau, blau, blau, blau, …
+  - **1**: hohe Zufälligkeit = blau, grün, rot, gelb, …
+  - **2**: sehr hohe Zufälligkeit = Elefant, Auto, grün, 42, jklö, …
+- Standardtemperatur meist zwischen 0,6 und 0,8
+
+## Temperatur in der Softmax-Funktion {.slide-only}
+
+```{python}
+#| fig-align: center
+#| out-width: 95%
+grafiken.temperatur();
+```
+
+$$
+p_i = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}
+$$
+
+::: notes
+Das Netz liefert für jedes Wort eine Bewertung $z_i$. Die Softmax-Funktion macht daraus Wahrscheinlichkeiten. Die Temperatur $T$ teilt die Bewertungen vorher: Ein kleines $T$ verstärkt die Unterschiede (fast immer „blau“), ein großes $T$ gleicht sie an (auch unwahrscheinliche Wörter kommen vor). Ein schönes Beispiel für Exponentialfunktionen im Einsatz.
+:::
+
+## Tokens
+
+- LLMs verarbeiten keine Wörter, sondern **Tokens**
+- Token können ganze Wörter, Wortteile oder einzelne Zeichen sein
+
+![](img/token.png){fig-align="center" width="60%"}
+
+::: quelle
+Quelle: <https://platform.openai.com/tokenizer>
+:::
+
+::: notes
+Als Faustregel entspricht ein Token im Englischen etwa drei Viertel eines Wortes, im Deutschen sind es wegen der langen Wörter meist etwas mehr Tokens pro Wort. Abgerechnet wird bei KI-Diensten nach Tokens, und auch das „Kontextfenster“ eines Modells wird in Tokens gemessen – das wird bei den Agenten noch wichtig.
+:::
+
+## Verschiedene LLMs ausprobieren
+
+- LMArena: <https://lmarena.ai/>
+- Duck.AI: <https://duck.ai>
+
+## Chatbots
+
+- LLMs sind keine Chatbots
+- Chatbots sind Anwendungen, die auf LLMs aufbauen
+- Chatbots haben oft zusätzliche Funktionen:
+  - Internetsuche
+  - Wissensdatenbanken
+  - Benutzeroberfläche
+  - …
+
+::: notes
+Und der nächste Schritt geht über Chatbots hinaus: Agenten bekommen nicht nur ein Textfenster, sondern Werkzeuge – sie dürfen Dateien lesen und schreiben, Programme ausführen und im Internet recherchieren.
+:::

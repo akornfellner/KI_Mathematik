@@ -1,0 +1,29 @@
+# Design "dark": dunkler Hintergrund, helle Schrift, kein Logo.
+# Das Handout (PDF) bleibt trotzdem weiß, damit es gut druckbar ist.
+color:
+  palette:
+    hellblau: "#42affa"
+    fast-schwarz: "#191919"
+    grau: "#9a9a9a"
+  primary: hellblau
+  secondary: grau
+  foreground: "#ffffff"
+  background: fast-schwarz
+
+typography:
+  fonts:
+    - family: Source Sans 3
+      source: google
+      weight: [400, 600, 700]
+      style: [normal, italic]
+    - family: JetBrains Mono
+      source: google
+      weight: [400]
+  base: Source Sans 3
+  headings:
+    family: Source Sans 3
+    weight: 700
+    color: "#ffffff"
+  monospace: JetBrains Mono
+  link:
+    color: hellblau

@@ -1,0 +1,16 @@
+---
+# Diese Datei muss normalerweise nicht bearbeitet werden:
+#   * Titel, Autor, Design  → _quarto.yml
+#   * Inhalte               → kapitel/NN-name.qmd (werden automatisch eingebunden)
+---
+
+```{python}
+#| include: false
+import sys
+
+sys.path.insert(0, "scripts")
+import plotstil  # noqa: F401  Farben (aus der gewählten Brand-Datei) und Stil für matplotlib
+import grafiken  # eigene Grafik-Funktionen (scripts/grafiken.py)
+```
+
+{{< include _kapitel.qmd >}}

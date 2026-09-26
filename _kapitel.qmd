@@ -1,0 +1,12 @@
+<!-- Automatisch erzeugt von scripts/kapitel.py – nicht bearbeiten. -->
+
+{{< include kapitel/01-einleitung.qmd >}}
+
+{{< include kapitel/02-neuronale-netze.qmd >}}
+
+{{< include kapitel/03-vector-embedding.qmd >}}
+
+{{< include kapitel/04-llms.qmd >}}
+
+{{< include kapitel/05-agents.qmd >}}
+
